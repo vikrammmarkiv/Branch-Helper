@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Branch.io Helper</string>
-    <string name="branch_key">key_live_agUyNsXpTCpC2scqzuq1FoijtugHpDsn</string>
-    <string name="branch_secret">secret_live_UHzaFNDG9g5BHEmjzcWAAYFd60fpctWV</string>
     <string name="error1">Uh oh!</string>
     <string name="failed">Failed</string>
 </resources>

@@ -6,11 +6,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.example.branchiohelper.constants.Constants.BASE_URL;
+
 public class APIClient {
 
-    private static final String BASE_URL = "https://api2.branch.io/";
     private static Retrofit retrofit = null;
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
 
     public static Retrofit getClient() {

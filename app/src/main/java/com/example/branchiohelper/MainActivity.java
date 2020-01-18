@@ -8,14 +8,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.branchiohelper.constants.Constants;
+import com.example.branchiohelper.events.LinkCreatedEvent;
+import com.example.branchiohelper.events.RequestCompletedEvent;
 import com.example.branchiohelper.interfaces.LinkHelper;
 import com.example.branchiohelper.models.LinkCreate;
 import com.example.branchiohelper.models.LinkCreateResponse;
+import com.example.branchiohelper.utils.LinkUtils;
 import com.example.branchiohelper.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,69 +47,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        branch_key = getString(R.string.branch_key);
         retrofit = APIClient.getClient();
         service = retrofit.create(LinkHelper.class);
-
-       responseText = findViewById(R.id.response);
+        responseText = findViewById(R.id.response);
 
         findViewById(R.id.create_link).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createLink(service);
-            }
-        });
-
-
-
-
-
-    }
-
-    void createLink(LinkHelper service){
-
-        HashMap<String,Object> linkCreateBody = new HashMap<>();
-        linkCreateBody.put("branch_key",branch_key);
-        linkCreateBody.put("channel","Helper");
-        linkCreateBody.put("campaign","XXX");
-
-        HashMap<String,String> linkData = new HashMap<>();
-        linkData.put("abcd","efgh");
-        linkCreateBody.put("data",linkData);
-
-        RequestBody requestBody = RequestBody.create(APIClient.JSON, new JSONObject(linkCreateBody).toString());
-
-        Toast.makeText(this, Utils.bodyToString(requestBody),Toast.LENGTH_LONG).show();
-
-        Call<LinkCreateResponse> linkCreateCall = service.linkCreate(requestBody);
-
-        linkCreateCall.enqueue(new Callback<LinkCreateResponse>() {
-            @Override
-            public void onResponse(Call<LinkCreateResponse> call, Response<LinkCreateResponse> response) {
-                LinkCreateResponse linkCreateResponse = response.body();
-                if (linkCreateResponse != null) {
-                    responseText.setText(linkCreateResponse.getUrl());
-
-                    readLink(service, linkCreateResponse.getUrl());
-                }
-                else
-                    responseText.setText(getString(R.string.error1));
-            }
-            @Override
-            public void onFailure(Call<LinkCreateResponse> call, Throwable t) {
-                responseText.setText(getString(R.string.failed));
+                LinkUtils.createLink(service);
             }
         });
     }
 
     void readLink(LinkHelper service, String url){
 
-        Call<JsonElement> linkReadCall = service.linkRead("https://vikram109.app.link/P7O7wiUsT0", branch_key);
+        Call<JsonElement> linkReadCall = service.linkRead(url, branch_key);
         linkReadCall.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
-                responseText.setText(responseText.getText()+"++++"+response.toString());
+                responseText.setText(responseText.getText()+"++++"+response.body().toString());
 
             }
 
@@ -112,5 +76,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Subscribe()
+    public void onLinkCreatedEvent(LinkCreatedEvent event) {
+        responseText.setText(event.getResponse().getUrl());
+    }
+
+    @Subscribe()
+    public void onLinkReadEvent(RequestCompletedEvent event) {
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }
