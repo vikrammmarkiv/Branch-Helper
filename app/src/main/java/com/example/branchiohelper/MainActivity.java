@@ -1,9 +1,13 @@
 package com.example.branchiohelper;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,20 +45,22 @@ public class MainActivity extends AppCompatActivity {
     String branch_key;
     LinkHelper service;
     Retrofit retrofit;
+    private CardView linkCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        fullScreen();
         retrofit = APIClient.getClient();
         service = retrofit.create(LinkHelper.class);
         responseText = findViewById(R.id.response);
+        linkCreate = findViewById(R.id.link_create);
 
-        findViewById(R.id.create_link).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.link_create).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LinkUtils.createLink(service);
+                startActivity(new Intent(MainActivity.this,LinkCreateActivity.class));
             }
         });
     }
@@ -76,6 +82,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void fullScreen(){
+        Window w = getWindow();
+        w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     @Subscribe()
