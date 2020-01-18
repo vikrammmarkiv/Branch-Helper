@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -24,16 +25,21 @@
                 android:id="@+id/link_create"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#CC00BCD4"
-                app:cardCornerRadius="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="4dp"
+                app:cardMaxElevation="1dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#CC00BCD4"
+                    android:divider="@drawable/divider"
+                    android:dividerPadding="5dp"
+                    android:showDividers="middle"
                     android:orientation="horizontal"
                     android:weightSum="3">
 
@@ -46,7 +52,7 @@
                         android:gravity="center"
                         android:text="LINK"
                         android:textColor="#FFFFFF"
-                        android:textSize="24sp" />
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -64,17 +70,22 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#CC00BCD4"
-                app:cardCornerRadius="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="4dp"
+                app:cardMaxElevation="1dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#CC00BCD4"
                     android:orientation="horizontal"
+                    android:divider="@drawable/divider"
+                    android:dividerPadding="5dp"
+                    android:showDividers="middle"
                     android:weightSum="3">
 
                     <TextView
@@ -86,7 +97,7 @@
                         android:gravity="center"
                         android:text="LINK"
                         android:textColor="#FCFCFC"
-                        android:textSize="24sp" />
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -104,17 +115,22 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#CC00BCD4"
-                app:cardCornerRadius="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="4dp"
+                app:cardMaxElevation="1dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#CC00BCD4"
                     android:orientation="horizontal"
+                    android:divider="@drawable/divider"
+                    android:dividerPadding="5dp"
+                    android:showDividers="middle"
                     android:weightSum="3">
 
                     <TextView
@@ -126,7 +142,7 @@
                         android:gravity="center"
                         android:text="LINK"
                         android:textColor="#FCFCFC"
-                        android:textSize="24sp" />
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -144,18 +160,23 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:background="#CC00BCD4"
-                app:cardBackgroundColor="#CC00BCD4"
-                app:cardCornerRadius="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="4dp"
+                app:cardMaxElevation="1dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#CC00BCD4"
                     android:orientation="horizontal"
+                    android:divider="@drawable/divider"
+                    android:dividerPadding="5dp"
+                    android:showDividers="middle"
                     android:weightSum="3">
 
                     <TextView
@@ -167,7 +188,7 @@
                         android:gravity="center"
                         android:text="LINK"
                         android:textColor="#FCFCFC"
-                        android:textSize="24sp" />
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -185,17 +206,22 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#CC00BCD4"
-                app:cardCornerRadius="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="4dp"
+                app:cardMaxElevation="1dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#CC00BCD4"
                     android:orientation="horizontal"
+                    android:divider="@drawable/divider"
+                    android:dividerPadding="5dp"
+                    android:showDividers="middle"
                     android:weightSum="3">
 
                     <TextView
@@ -207,7 +233,7 @@
                         android:gravity="center"
                         android:text="LINK"
                         android:textColor="#FCFCFC"
-                        android:textSize="24sp" />
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -225,17 +251,22 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#CC009688"
-                app:cardCornerRadius="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="4dp"
+                app:cardMaxElevation="1dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#CC009688"
                     android:orientation="horizontal"
+                    android:divider="@drawable/divider"
+                    android:dividerPadding="5dp"
+                    android:showDividers="middle"
                     android:weightSum="3">
 
                     <TextView
@@ -247,7 +278,7 @@
                         android:gravity="center"
                         android:text="APP"
                         android:textColor="#FCFCFC"
-                        android:textSize="24sp" />
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -265,17 +296,22 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#CC009688"
-                app:cardCornerRadius="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="4dp"
+                app:cardMaxElevation="1dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#CC009688"
                     android:orientation="horizontal"
+                    android:divider="@drawable/divider"
+                    android:dividerPadding="5dp"
+                    android:showDividers="middle"
                     android:weightSum="3">
 
                     <TextView
@@ -287,7 +323,7 @@
                         android:gravity="center"
                         android:text="APP"
                         android:textColor="#FCFCFC"
-                        android:textSize="24sp" />
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -305,17 +341,22 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#CC009688"
-                app:cardCornerRadius="@dimen/_10sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="4dp"
+                app:cardMaxElevation="1dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#CC009688"
                     android:orientation="horizontal"
+                    android:divider="@drawable/divider"
+                    android:dividerPadding="5dp"
+                    android:showDividers="middle"
                     android:weightSum="3">
 
                     <TextView
@@ -327,7 +368,7 @@
                         android:gravity="center"
                         android:text="APP"
                         android:textColor="#FCFCFC"
-                        android:textSize="24sp" />
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -369,6 +410,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.19" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Branch Helper"
+        android:textColor="#0F0106"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/create_link"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.71000004" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -51,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fullScreen();
         retrofit = APIClient.getClient();
         service = retrofit.create(LinkHelper.class);
         responseText = findViewById(R.id.response);
@@ -84,15 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void fullScreen(){
-        Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
     @Subscribe()
     public void onLinkCreatedEvent(LinkCreatedEvent event) {
         responseText.setText(event.getResponse().getUrl());
@@ -113,5 +104,13 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+    protected void onStartNewActivity() {
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+    }
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        onStartNewActivity();
     }
 }
