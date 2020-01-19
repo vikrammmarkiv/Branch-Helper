@@ -49,18 +49,18 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="26dp"
+                    android:layout_marginTop="18dp"
                     android:contentDescription="TODO"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/form_image" />
+                    app:srcCompat="@drawable/ic_link" />
 
                 <TextView
                     android:id="@+id/form_text"
                     android:layout_width="0dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="18dp"
                     android:gravity="center_vertical"
                     android:text="Link Data"
                     android:textAlignment="gravity"
@@ -69,23 +69,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/form_image"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/form_mode"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="16dp"
-                    android:hint="Select type"
-                    android:textAlignment="textStart"
-                    android:textColor="#FFFFFF"
-                    android:textColorHint="#DAFFFFFF"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="@+id/form_text"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/form_text"
-                    app:layout_constraintTop_toBottomOf="@+id/form_text" />
 
                 <ImageView
                     android:id="@+id/downn_image"
@@ -104,29 +87,28 @@
                     android:id="@+id/key"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:ems="10"
                     android:hint="key"
-                    android:inputType="number"
+                    android:inputType="textShortMessage"
                     android:textAlignment="textStart"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#FFD6D5D5"
                     android:textSize="16sp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="@+id/downn_image"
-                    app:layout_constraintStart_toStartOf="@+id/form_mode"
-                    app:layout_constraintTop_toBottomOf="@+id/form_mode" />
+                    app:layout_constraintStart_toStartOf="@+id/form_text"
+                    app:layout_constraintTop_toBottomOf="@+id/form_text" />
 
                 <EditText
                     android:id="@+id/value"
                     style="@android:style/Widget.Material.Light.AutoCompleteTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:ems="10"
                     android:gravity="start"
                     android:hint="Value"
-                    android:inputType="number"
                     android:textAlignment="textStart"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#E6E4E3E3"
@@ -135,6 +117,24 @@
                     app:layout_constraintEnd_toEndOf="@+id/downn_image"
                     app:layout_constraintStart_toStartOf="@+id/form_mode"
                     app:layout_constraintTop_toBottomOf="@+id/key" />
+
+                <TextView
+                    android:id="@+id/form_mode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="16dp"
+                    android:hint="Select type"
+                    android:textAlignment="textStart"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#DAFFFFFF"
+                    android:textSize="16sp"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="@+id/form_text"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/form_text"
+                    app:layout_constraintTop_toBottomOf="@+id/form_text" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

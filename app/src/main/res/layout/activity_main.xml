@@ -55,7 +55,7 @@
                         android:textSize="22sp" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/submit_form"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -100,7 +100,7 @@
                         android:textSize="22sp" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/submit_form"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -145,7 +145,7 @@
                         android:textSize="22sp" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/submit_form"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -191,7 +191,7 @@
                         android:textSize="22sp" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/submit_form"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -236,7 +236,7 @@
                         android:textSize="22sp" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/submit_form"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -281,7 +281,7 @@
                         android:textSize="22sp" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/submit_form"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -326,7 +326,7 @@
                         android:textSize="22sp" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/submit_form"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -371,7 +371,7 @@
                         android:textSize="22sp" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/submit_form"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
