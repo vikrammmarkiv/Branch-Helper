@@ -61,6 +61,7 @@ public class LinkCreateActivity extends AppCompatActivity {
         findViewById(R.id.submit_form).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utils.hideKeyboard(LinkCreateActivity.this);
                 loading_screen.setVisibility(View.VISIBLE);
                 quickLinkEnabled = ((CheckBox)findViewById(R.id.quick_link)).isChecked();
                 LinkUtils.createLink(service,Utils.prepareDataForLinkCreate(formAdapter.mFormItems, quickLinkEnabled));

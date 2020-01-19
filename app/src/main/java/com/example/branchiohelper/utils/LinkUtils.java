@@ -12,7 +12,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.branchiohelper.constants.Constants.BRANCH_KEY;
+import static com.example.branchiohelper.utils.Utils.BRANCH_KEY;
+
 
 public class LinkUtils {
 

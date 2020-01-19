@@ -1,7 +1,12 @@
 package com.example.branchiohelper.utils;
 
+import android.app.Activity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
 import com.example.branchiohelper.constants.Constants;
 import com.example.branchiohelper.models.FormData;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +20,10 @@ import okio.Buffer;
 import retrofit2.Response;
 
 public class Utils {
+
+    public static String BRANCH_KEY="";
+    public static String BRANCH_SECRET="";
+
     public static String bodyToString(final RequestBody request){
         try {
             final RequestBody copy = request;
@@ -31,7 +40,7 @@ public class Utils {
                                                                   Boolean quickLinkEnabled){
         HashMap<String,Object> requestBody = new HashMap<>();
         HashMap<String,Object> requestLinkData = new HashMap<>();
-        requestBody.put("branch_key",Constants.BRANCH_KEY);
+        requestBody.put("branch_key",BRANCH_KEY);
         for (FormData data:formItems){
             if (Constants.DEFAULT_KEYS.contains(data.getKey())){
                 requestBody.put(data.getKey(),data.getValue());
@@ -46,5 +55,20 @@ public class Utils {
         }
         requestBody.put("data",requestLinkData);
         return requestBody;
+    }
+
+    public static void showSnackBar(View view, String text){
+        Snackbar.make(view, text, Snackbar.LENGTH_SHORT).show();
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

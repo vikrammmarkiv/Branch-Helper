@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.example.branchiohelper.models.LinkCreate;
 import com.example.branchiohelper.models.LinkCreateResponse;
 import com.example.branchiohelper.utils.LinkUtils;
 import com.example.branchiohelper.utils.Utils;
+import com.example.branchiohelper.views.AppConfigDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     String branch_key;
     LinkHelper service;
     Retrofit retrofit;
+    ImageView settings;
     private CardView linkCreate;
 
     @Override
@@ -56,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         service = retrofit.create(LinkHelper.class);
         responseText = findViewById(R.id.response);
         linkCreate = findViewById(R.id.link_create);
+        settings = findViewById(R.id.settings);
+
+        init();
 
         findViewById(R.id.link_create).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +70,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this,LinkCreateActivity.class));
             }
         });
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppConfigDialog dialog = new AppConfigDialog(MainActivity.this);
+                dialog.showDialog();
+            }
+        });
+    }
+
+    void init(){
+        SharedPreferences prefs = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
+        Utils.BRANCH_KEY = prefs.getString("branch_key", "");
+        Utils.BRANCH_SECRET = prefs.getString("branch_secret", "");
     }
 
     void readLink(LinkHelper service, String url){
