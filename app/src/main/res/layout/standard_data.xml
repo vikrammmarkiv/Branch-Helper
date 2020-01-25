@@ -83,14 +83,18 @@
                     app:layout_constraintTop_toTopOf="@+id/form_mode"
                     app:srcCompat="@drawable/ic_arrow_drop_down_white_24px" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/key"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:completionThreshold="0"
+                    android:dropDownHeight="@dimen/_100sdp"
                     android:ems="10"
                     android:hint="key"
                     android:inputType="textShortMessage"
+                    android:popupBackground="#444444"
+                    android:popupTheme="@style/Base.Theme.AppCompat.Light"
                     android:textAlignment="textStart"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#FFD6D5D5"

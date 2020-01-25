@@ -36,6 +36,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -47,17 +49,22 @@ public class MainActivity extends AppCompatActivity {
 
     TextView responseText;
     String branch_key;
-    LinkHelper service;
     Retrofit retrofit;
     ImageView settings;
     private CardView linkCreate;
+    public static LinkHelper service;
+
+
+    @OnClick(R.id.link_read) void readLink(){
+        startActivity(new Intent(this,LinkReadActivity.class));
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         retrofit = APIClient.getClient();
-        service = retrofit.create(LinkHelper.class);
         responseText = findViewById(R.id.response);
         linkCreate = findViewById(R.id.link_create);
         settings = findViewById(R.id.settings);
@@ -81,29 +88,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void init(){
+        ButterKnife.bind(this);
         SharedPreferences prefs = getSharedPreferences(Constants.MY_PREFS, MODE_PRIVATE);
         Utils.BRANCH_KEY = prefs.getString("branch_key", "");
         Utils.BRANCH_SECRET = prefs.getString("branch_secret", "");
+        Retrofit retrofit = APIClient.getClient();
+        service = retrofit.create(LinkHelper.class);
     }
 
-    void readLink(LinkHelper service, String url){
 
-        Call<JsonElement> linkReadCall = service.linkRead(url, branch_key);
-        linkReadCall.enqueue(new Callback<JsonElement>() {
-            @Override
-            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
-
-                responseText.setText(responseText.getText()+"++++"+response.body().toString());
-
-            }
-
-            @Override
-            public void onFailure(Call<JsonElement> call, Throwable t) {
-
-            }
-        });
-
-    }
 
     @Subscribe()
     public void onLinkCreatedEvent(LinkCreatedEvent event) {

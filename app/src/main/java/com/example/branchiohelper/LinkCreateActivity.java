@@ -38,12 +38,9 @@ public class LinkCreateActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         ArrayList<FormData> formItems = new ArrayList<>();
         formItems.add(new FormData());
-        FormAdapter formAdapter = new FormAdapter(formItems);
+        FormAdapter formAdapter = new FormAdapter(formItems, this);
         recyclerView.setItemViewCacheSize(20);
         recyclerView.setAdapter(formAdapter);
-
-        Retrofit retrofit = APIClient.getClient();
-        LinkHelper service = retrofit.create(LinkHelper.class);
 
         loading_screen = findViewById(R.id.loading_screen);
 
@@ -64,7 +61,7 @@ public class LinkCreateActivity extends AppCompatActivity {
                 Utils.hideKeyboard(LinkCreateActivity.this);
                 loading_screen.setVisibility(View.VISIBLE);
                 quickLinkEnabled = ((CheckBox)findViewById(R.id.quick_link)).isChecked();
-                LinkUtils.createLink(service,Utils.prepareDataForLinkCreate(formAdapter.mFormItems, quickLinkEnabled));
+                LinkUtils.createLink(MainActivity.service,Utils.prepareDataForLinkCreate(formAdapter.mFormItems, quickLinkEnabled));
             }
         });
     }
