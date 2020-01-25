@@ -3,6 +3,7 @@
     package="com.example.branchiohelper">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +14,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".LinkReadActivity"></activity>
         <activity android:name=".LinkCreateActivity" />
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="ocr" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
