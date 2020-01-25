@@ -99,7 +99,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="10dp"
                         android:ems="10"
                         android:hint="Enter Key"
                         android:inputType="textPersonName"
@@ -112,7 +112,7 @@
                         android:id="@+id/response_title2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:ems="10"
                         android:text="Branch Secret:"
@@ -143,6 +143,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
                         android:gravity="right"
                         android:orientation="horizontal"
@@ -151,6 +152,32 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/branch_secret">
+
+                        <LinearLayout
+                            android:id="@+id/camera_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="18dp"
+                                android:paddingStart="8dp"
+                                app:srcCompat="@drawable/ic_camera_black" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="8dp"
+                                android:paddingEnd="4dp"
+                                android:text="Capture"
+                                android:textColor="#313131"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/save_button"
@@ -165,7 +192,6 @@
                                 android:layout_width="24dp"
                                 android:layout_height="18dp"
                                 android:paddingStart="8dp"
-                                android:src="@drawable/ic_share_black"
                                 app:srcCompat="@drawable/ic_done" />
 
                             <TextView

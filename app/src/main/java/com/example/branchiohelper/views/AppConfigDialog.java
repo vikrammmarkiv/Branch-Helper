@@ -2,6 +2,7 @@ package com.example.branchiohelper.views;
 
 /* Created by Vikram on 19-01-2020. */
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ClipData;
@@ -9,6 +10,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.provider.SyncStateContract;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.branchiohelper.MainActivity;
 import com.example.branchiohelper.R;
 import com.example.branchiohelper.constants.Constants;
 import com.example.branchiohelper.utils.Utils;
@@ -28,10 +31,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class AppConfigDialog {
     private LinearLayout save;
+    private LinearLayout capture;
     private EditText branch_key;
     private EditText branch_secret;
     private Dialog dialog;
-    public AppConfigDialog(Activity activity){
+    public AppConfigDialog(MainActivity activity){
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -44,7 +48,13 @@ public class AppConfigDialog {
             branch_key.setText(Utils.BRANCH_KEY);
         if (!Utils.BRANCH_SECRET.equals(""))
             branch_secret.setText(Utils.BRANCH_SECRET);
-
+        capture = dialog.findViewById(R.id.camera_button);
+        capture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.captureImage();
+            }
+        });
         save = dialog.findViewById(R.id.save_button);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
