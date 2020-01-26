@@ -16,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -29,10 +30,10 @@ public interface LinkHelper {
     Call<JsonElement> linkRead(@Query("url") String url, @Query("branch_key") String branch_key);
 
     @PUT("v1/url")
-    Call<JsonObject> linkUpdate(@Query("url") String url, @Body HashMap<String, Object> body);
+    Call<JsonElement> linkUpdate(@Query("url") String url, @Body HashMap<String, Object> body);
 
-    @DELETE("v1/url")
-    Call<JsonObject> linkDelete(@Query("url") String url, @Body HashMap<String, Object> body);
+    @HTTP(method = "DELETE", path = "v1/url", hasBody = true)
+    Call<JsonElement> linkDelete(@Query("url") String url, @Body HashMap<String, Object> body);
 
     @POST("v1/url/bulk/{key}")
     Call<JsonArray> linkBulkCreate(@Path ("key") String branch_key, @Body HashMap<String, Object> body);

@@ -12,7 +12,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -41,6 +45,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -57,17 +64,29 @@ import static com.example.branchiohelper.constants.Constants.CAMERA_PERMISSION_C
 import static com.example.branchiohelper.constants.Constants.CAMERA_REQUEST;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static LinkHelper service;
     TextView responseText;
     String branch_key;
     Retrofit retrofit;
     ImageView settings;
-    private CardView linkCreate;
-    public static LinkHelper service;
+    String filename;
+    Uri imageUri;
+    AppConfigDialog dialog;
 
+    @OnClick(R.id.link_create) void createLink(){
+        startActivity(new Intent(this,LinkCreateActivity.class));
+    }
 
     @OnClick(R.id.link_read) void readLink(){
         startActivity(new Intent(this,LinkReadActivity.class));
+    }
+
+    @OnClick(R.id.link_update) void updateLink(){
+        startActivity(new Intent(this,LinkUpdateActivity.class));
+    }
+
+    @OnClick(R.id.link_delete) void deleteLink(){
+        startActivity(new Intent(this,LinkDeleteActivity.class));
     }
 
 
@@ -77,22 +96,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         retrofit = APIClient.getClient();
         responseText = findViewById(R.id.response);
-        linkCreate = findViewById(R.id.link_create);
         settings = findViewById(R.id.settings);
 
         init();
 
-        findViewById(R.id.link_create).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,LinkCreateActivity.class));
-            }
-        });
-
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppConfigDialog dialog = new AppConfigDialog(MainActivity.this);
+                dialog = new AppConfigDialog(MainActivity.this);
                 dialog.showDialog();
             }
         });
@@ -106,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
         Retrofit retrofit = APIClient.getClient();
         service = retrofit.create(LinkHelper.class);
     }
-
-
 
     protected void onStartNewActivity() {
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
@@ -128,9 +137,7 @@ public class MainActivity extends AppCompatActivity {
         {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
             {
-                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                captureImage();
             }
             else
             {
@@ -145,33 +152,49 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
         {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-
-            ArrayList<String> imageTextList = Utils.scanImageForText(photo, this);
-            StringBuilder str = new StringBuilder();
-            if(imageTextList.size()>0) {
-                for (String s : imageTextList)
-                    str.append(s);
-                Log.d("branch image::",str.toString());
-                Utils.showSnackBar(findViewById(R.id.app_header), str.toString());
-            }
-            Log.d("branch image::","4353534");
+                String contents = data.getStringExtra("SCAN_RESULT");
+                Log.d("CAMERAA",contents);
+                storeScanResults(contents);
 
         }
     }
 
     public void captureImage(){
-        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CAMERA}, Constants.CAMERA_PERMISSION_CODE);
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, Constants.CAMERA_PERMISSION_CODE);
             Log.d("Branch LLL","requested");
         }
         else
         {
-            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            try {
 
-            startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
+                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+                dialog.dismissDialog();
+                startActivityForResult(intent, CAMERA_REQUEST);
+
+            } catch (Exception e) {
+
+                Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
+                Intent marketIntent = new Intent(Intent.ACTION_VIEW,marketUri);
+                startActivity(marketIntent);
+
+            }
+        }
+    }
+    void storeScanResults(String scanResult){
+        dialog = new AppConfigDialog(MainActivity.this);
+        dialog.showDialog();
+        String[] results = scanResult.split("\n");
+        for (String str:results){
+            if (str.contains("key")){
+                dialog.setKey(str);
+            }
+            else if (str.contains("secret")){
+                dialog.setSecret(str);
+            }
         }
     }
 }

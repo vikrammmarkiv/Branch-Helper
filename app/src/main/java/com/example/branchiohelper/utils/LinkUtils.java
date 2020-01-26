@@ -3,7 +3,9 @@ package com.example.branchiohelper.utils;
 /* Created by Vikram on 18-01-2020. */
 
 import com.example.branchiohelper.events.LinkCreatedEvent;
+import com.example.branchiohelper.events.LinkDeleteEvent;
 import com.example.branchiohelper.events.LinkReadEvent;
+import com.example.branchiohelper.events.LinkUpdatedEvent;
 import com.example.branchiohelper.interfaces.LinkHelper;
 import com.example.branchiohelper.models.LinkCreateResponse;
 import com.google.gson.Gson;
@@ -41,13 +43,18 @@ public class LinkUtils {
         });
     }
 
-    public static void readLink(LinkHelper service, String url){
-        Call<JsonElement> linkReadCall = service.linkRead(url, BRANCH_KEY);
-        linkReadCall.enqueue(new Callback<JsonElement>() {
+    public static void updateLink(LinkHelper service, String url, HashMap<String,Object> linkUpdateBody){
+        Call<JsonElement> linkUpdateCall = service.linkUpdate(url, linkUpdateBody);
+        linkUpdateCall.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
-                JsonObject jsonObject = response.body().getAsJsonObject();
-                EventBus.getDefault().post(new LinkReadEvent(jsonObject.get("data").toString()));
+                JsonObject jsonObject = null;
+                if (response.body() != null) {
+                    jsonObject = response.body().getAsJsonObject();
+                    EventBus.getDefault().post(new LinkUpdatedEvent(jsonObject.get("data").toString()));
+                }
+                else
+                    EventBus.getDefault().post(new LinkUpdatedEvent(response.message()));
             }
             @Override
             public void onFailure(Call<JsonElement> call, Throwable t) {
@@ -55,11 +62,39 @@ public class LinkUtils {
             }
         });
     }
-    public static ArrayList<String[]> convertLinkData(JsonElement data){
-        ArrayList<String[]> linkData = new ArrayList<>();
-        HashMap<String,String> convertedData = new Gson().fromJson(data.getAsString(), new TypeToken<HashMap<String, String>>(){}.getType());
-        linkData.add((String[]) convertedData.keySet().toArray());
-        linkData.add((String[]) convertedData.values().toArray());
-        return linkData;
+
+    public static void readLink(LinkHelper service, String url){
+        Call<JsonElement> linkReadCall = service.linkRead(url, BRANCH_KEY);
+        linkReadCall.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                JsonObject jsonObject = null;
+                if (response.body() != null) {
+                    jsonObject = response.body().getAsJsonObject();
+                    EventBus.getDefault().post(new LinkReadEvent(jsonObject.get("data").toString()));
+                }
+                else
+                    EventBus.getDefault().post(new LinkReadEvent(""));
+            }
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static void deleteLink(LinkHelper service, String url, HashMap<String,Object> linkDeleteBody){
+        Call<JsonElement> linkDeleteCall = service.linkDelete(url,linkDeleteBody);
+        linkDeleteCall.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                JsonObject jsonObject = response.body().getAsJsonObject();
+                EventBus.getDefault().post(new LinkDeleteEvent(jsonObject.get("deleted").toString()));
+            }
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+
+            }
+        });
     }
 }

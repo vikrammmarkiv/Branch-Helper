@@ -2,6 +2,7 @@ package com.example.branchiohelper.utils;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -11,11 +12,17 @@ import android.widget.Toast;
 import com.example.branchiohelper.constants.Constants;
 import com.example.branchiohelper.models.FormData;
 import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -43,24 +50,27 @@ public class Utils {
         }
     }
 
-    public static HashMap<String,Object> prepareDataForLinkCreate(ArrayList<FormData> formItems,
-                                                                  Boolean quickLinkEnabled){
+    public static HashMap<String,Object> prepareLinkData(ArrayList<FormData> formItems,
+                                                         Boolean quickLinkEnabled, Boolean isUpdate){
         HashMap<String,Object> requestBody = new HashMap<>();
         HashMap<String,Object> requestLinkData = new HashMap<>();
         requestBody.put("branch_key",BRANCH_KEY);
-        for (FormData data:formItems){
-            if (Constants.DEFAULT_KEYS.contains(data.getKey())){
-                requestBody.put(data.getKey(),data.getValue());
+        if (isUpdate)
+            requestBody.put("branch_secret",BRANCH_SECRET);
+        if (formItems!=null) {
+            for (FormData data : formItems) {
+                if (Constants.DEFAULT_KEYS.contains(data.getKey())) {
+                    requestBody.put(data.getKey(), data.getValue());
+                } else {
+                    requestLinkData.put(data.getKey(), data.getValue());
+                }
             }
-            else {
-                requestLinkData.put(data.getKey(),data.getValue());
+            if (quickLinkEnabled) {
+                requestBody.put("type", 1);
+                requestLinkData.put("$marketing_title", "Branch Helper Link");
             }
+            requestBody.put("data", requestLinkData);
         }
-        if (quickLinkEnabled){
-            requestBody.put("type",1);
-            requestLinkData.put("$marketing_title","Branch Helper Link");
-        }
-        requestBody.put("data",requestLinkData);
         return requestBody;
     }
 
@@ -88,6 +98,7 @@ public class Utils {
             Log.d("Branch","Dependencies are downloading....try after few moment");
             return null;
         }
+
 
         Frame imageFrame = new Frame.Builder()
                 .setBitmap(scannedImage)
@@ -140,5 +151,39 @@ public class Utils {
         }
 
         return json.toString();
+    }
+
+    public static ArrayList<String[]> convertLinkData(JsonElement data){
+        ArrayList<String[]> linkData = new ArrayList<>();
+        HashMap<String,String> convertedData = new Gson().fromJson(data.getAsString(), new TypeToken<HashMap<String, String>>(){}.getType());
+        linkData.add((String[]) convertedData.keySet().toArray());
+        linkData.add((String[]) convertedData.values().toArray());
+        return linkData;
+    }
+
+    public static String getFilePath() {
+        String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/branchHelper/";
+        File file = new File(rootPath);
+        if (!file.exists())
+            file.mkdirs();
+        return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg");
+    }
+
+
+    public static String scanQRCodeForText(Bitmap scannedImage, Activity activity) {
+        BarcodeDetector detector =
+                new BarcodeDetector.Builder(activity.getApplicationContext())
+                        .setBarcodeFormats(Barcode.DATA_MATRIX | Barcode.QR_CODE)
+                        .build();
+        if (!detector.isOperational()) {
+            Toast.makeText(activity, "Dependencies are not loaded yet...please try after few moment!!", Toast.LENGTH_SHORT).show();
+            Log.d("Branch", "Dependencies are downloading....try after few moment");
+            return null;
+        }
+
+        Frame frame = new Frame.Builder().setBitmap(scannedImage).build();
+        SparseArray<Barcode> barcodes = detector.detect(frame);
+        Barcode thisCode = barcodes.valueAt(0);
+        return thisCode.rawValue;
     }
 }

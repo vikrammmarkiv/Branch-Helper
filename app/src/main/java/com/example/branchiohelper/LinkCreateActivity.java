@@ -8,11 +8,9 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import com.example.branchiohelper.adapter.FormAdapter;
 import com.example.branchiohelper.events.LinkCreatedEvent;
-import com.example.branchiohelper.interfaces.LinkHelper;
 import com.example.branchiohelper.models.FormData;
 import com.example.branchiohelper.utils.LinkUtils;
 import com.example.branchiohelper.utils.Utils;
@@ -22,8 +20,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-
-import retrofit2.Retrofit;
 
 public class LinkCreateActivity extends AppCompatActivity {
 
@@ -38,7 +34,7 @@ public class LinkCreateActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         ArrayList<FormData> formItems = new ArrayList<>();
         formItems.add(new FormData());
-        FormAdapter formAdapter = new FormAdapter(formItems, this);
+        FormAdapter formAdapter = new FormAdapter(formItems, this, recyclerView);
         recyclerView.setItemViewCacheSize(20);
         recyclerView.setAdapter(formAdapter);
 
@@ -61,7 +57,7 @@ public class LinkCreateActivity extends AppCompatActivity {
                 Utils.hideKeyboard(LinkCreateActivity.this);
                 loading_screen.setVisibility(View.VISIBLE);
                 quickLinkEnabled = ((CheckBox)findViewById(R.id.quick_link)).isChecked();
-                LinkUtils.createLink(MainActivity.service,Utils.prepareDataForLinkCreate(formAdapter.mFormItems, quickLinkEnabled));
+                LinkUtils.createLink(MainActivity.service,Utils.prepareLinkData(formAdapter.mFormItems, quickLinkEnabled,false));
             }
         });
     }

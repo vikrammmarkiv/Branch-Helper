@@ -74,4 +74,16 @@ public class AppConfigDialog {
     public void showDialog(){
         dialog.show();
     }
+
+    public void dismissDialog(){
+        dialog.dismiss();
+    }
+
+    public void setKey(String key){
+        branch_key.setText(key);
+    }
+
+    public void setSecret(String secret){
+        branch_secret.setText(secret);
+    }
 }

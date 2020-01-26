@@ -3,8 +3,10 @@ package com.example.branchiohelper.adapter;
 /* Created by Vikram on 19-01-2020. */
 
 import android.app.Activity;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +31,11 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class FormAdapter extends RecyclerView.Adapter<FormAdapter.MyViewHolder> {
     public ArrayList<FormData> mFormItems;
     public Activity mActivity;
-    public FormAdapter(ArrayList<FormData> formItems, Activity activity) {
+    private RecyclerView mRecyclerView;
+    public FormAdapter(ArrayList<FormData> formItems, Activity activity, RecyclerView recyclerView) {
         mFormItems = formItems;
         mActivity = activity;
+        mRecyclerView = recyclerView;
     }
 
     @Override
@@ -42,7 +46,20 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        if (position!=0) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        holder.form_key.requestFocus();
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
 
+                }
+            },500);
+        }
     }
 
     @Override
@@ -64,6 +81,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.MyViewHolder> 
             form_key = view.findViewById(R.id.key);
             form_value = view.findViewById(R.id.value);
 
+//            CustomArrayAdapter adapter = new CustomArrayAdapter(mActivity,R.layout.autocomplete_layout, Constants.BRANCH_STANDARD_PARAMS);
+
             ArrayAdapter<String> adapter = new ArrayAdapter<>(mActivity,R.layout.autocomplete_layout, Constants.BRANCH_STANDARD_PARAMS);
             form_key.setAdapter(adapter);
             form_key.addTextChangedListener(new TextWatcher() {
@@ -79,10 +98,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.MyViewHolder> 
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    if (adapter.getCount()<=1){
-                        form_key.setDropDownHeight(WRAP_CONTENT);
-                    }
-                    else form_key.setDropDownHeight(dropDownHeightMax);
+                    Log.d("DROPDOWN",String.valueOf(adapter.getCount()));
                 }
             });
 
